@@ -1,13 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import JsonDataViewer from "./components/JsonDataViewer";
-import { CreaturesResponse } from "./models/creatures";
-import { SessionData } from "./models/huntAnalyser";
-import { useJson } from "./contexts/JsonContext";
-import { fetchCreatures } from "./services/tibiaService";
-import JsonInput from "./components/JsonInput";
+import JsonDataViewer from "../components/JsonDataViewer";
+import { CreaturesResponse } from "../models/creatures";
+import { fetchCreatures } from "../services/tibiaService";
+import { useJson } from "../contexts/JsonContext";
+import { SessionData } from "../models/huntAnalyser";
 
-export default function Home() {
+export default function MockTable() {
   const [creatures, setCreatures] = useState<CreaturesResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -61,19 +60,17 @@ export default function Home() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+
   return (
     <>
       <div className="container mx-auto p-4">
-        <h1 className="text-xl font-bold mb-4">JSON Input Example</h1>
-        <JsonInput />
-      </div>
-      <div className="container mx-auto p-4">
-        <div className="flex items-center justify-between px-2">
-          <h1 className="text-xl font-bold mb-4">REGISTRO:</h1>
-          <button onClick={saveJson}>Salvar</button>
-          <img src="https://tibia.fandom.com/wiki/Thais?file=spider.gif"></img>
+        <div className="container mx-auto p-4">
+          <div className="flex items-center justify-between px-2">
+            <h1 className="text-xl font-bold mb-4">REGISTRO:</h1>
+            <button onClick={saveJson}>Salvar</button>
+          </div>
+          <JsonDataViewer creatures={creatures} />
         </div>
-        <JsonDataViewer creatures={creatures} />
       </div>
     </>
   );

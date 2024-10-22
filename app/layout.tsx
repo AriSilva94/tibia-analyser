@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { FirebaseNextJSProvider } from "firebase-nextjs/client/auth";
+import { JsonProvider } from "./contexts/JsonContext";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,16 +24,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+  showHeader?: boolean;
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <FirebaseNextJSProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col bg-slate-600`}
+        >
+          <Header />
+          <JsonProvider>{children}</JsonProvider>
+          <Footer />
+        </body>
+      </FirebaseNextJSProvider>
     </html>
   );
 }
